@@ -107,6 +107,7 @@ extension AppContentViewController: UIGestureRecognizerDelegate {
                     return animator
                 } else {
                     let animator = UIViewPropertyAnimator(duration: 0, curve: .linear, animations: {
+                        targetAnimatedView.clipsToBounds = true
                         targetAnimatedView.transform = .init(scaleX: targetShrinkScale, y: targetShrinkScale)
                         targetAnimatedView.layer.cornerRadius = targetCornerRadius
                         targetAnimatedView.layoutIfNeeded()
