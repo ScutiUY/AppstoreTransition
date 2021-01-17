@@ -8,30 +8,22 @@
 import Foundation
 import UIKit
 
-class AppContentTransition: NSObject, UIViewControllerTransitioningDelegate {
+class AppContentTransitionController: NSObject, UIViewControllerTransitioningDelegate {
     
-    var presentAnimator: AppContentPresentingAnimator?
-    var dismissAnimator: AppContentDissmissingAnimator?
-    var data: AppContentModel?
+    var superViewcontroller: UIViewController?
+    var targetCellFrame: CGRect?
     var indexPath: IndexPath?
     
-    init(data: AppContentModel, indexPath: IndexPath) {
-        super.init()
-        presentAnimator = AppContentPresentingAnimator()
-        dismissAnimator = AppContentDissmissingAnimator()
-        self.data = data
-        self.indexPath = indexPath
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return AppcontentPresentaion(presentedViewController: presented, presenting: presenting)
     }
-    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        self.presentAnimator!.targetData = self.data
-        self.presentAnimator!.targetIndexPath = indexPath
-        
-        return presentAnimator
+        return AppContentPresentTransitioningAnimator(indexPath: indexPath!)
     }
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        self.dismissAnimator!.targetData = self.data
-        self.dismissAnimator!.targetIndexPath = indexPath
-        return dismissAnimator
+        return AppContentDissmissTransitioningAnimator(indexPath: indexPath!, cellFrame: targetCellFrame!)
+    }
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
     }
 }

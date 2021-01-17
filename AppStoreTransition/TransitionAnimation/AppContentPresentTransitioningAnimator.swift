@@ -7,8 +7,9 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
-class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class AppContentPresentTransitioningAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     var contentViewTopAnchor: NSLayoutConstraint!
     var contentViewWidthAnchor: NSLayoutConstraint!
@@ -37,8 +38,7 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let containerView = transitionContext.containerView
-        containerView.alpha = 1.0
-        
+     
         guard let fromVC = transitionContext.viewController(forKey: .from) as? TabBarViewController else { fatalError() }
         guard let appStoreMenuVC = fromVC.viewControllers![0] as? AppStoreMenuViewController else { fatalError() }
         guard let contentVC = transitionContext.viewController(forKey: .to) as? AppContentViewController else { fatalError() }
@@ -46,20 +46,29 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         guard let toView = contentVC.view else { fatalError() }
         
         let targetTabbar = fromVC.tabBar
-        let fallingTabbar = UITabBar(frame: targetTabbar.frame)
+        let fallingTabbar = UITabBar(frame: fromVC.tabBar.frame)
         
         let targetCell = appStoreMenuVC.appCollectionView.cellForItem(at: targetIndexPath!) as! AppCollectionViewCell
         let startFrame = appStoreMenuVC.appCollectionView.convert(targetCell.frame, to: fromView)
+        targetCell.resetTransform()
         
         let contentView = AppContentView(isContentView: true, isTransition: true)
         
         contentView.fetchDataForContentVC(image: targetData!.image, subD: targetData!.subDescription!, desc: targetData!.description!, content: (targetData?.content)!, contentView: containerView.frame, isTransition: true)
         
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = GlobalConstants.cornerRadius
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
-        fallingTabbar.items = targetTabbar.items
+        let vcTabBarItem = UITabBarItem(title: "투데이", image: nil, tag: 0)
+        let vc2TabBarItem = UITabBarItem(title: "설정", image: nil, tag: 1)
+        
+        vc2TabBarItem.isEnabled = false
+        
+        fallingTabbar.items = [vcTabBarItem, vc2TabBarItem]
+        fallingTabbar.selectedItem = fallingTabbar.items?.first
+        
+        appStoreMenuVC.appCollectionView.cellForItem(at: targetIndexPath!)?.contentView.alpha = 0.0
         
         toView.alpha = 0.0
         contentView.alpha = 1.0
@@ -79,7 +88,7 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         
         contentViewTopAnchor.constant = 0
         
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.7, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveLinear, animations: {
             contentView.layoutIfNeeded()
         }) { (comp) in
             toView.alpha = 1.0
@@ -91,12 +100,21 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         
         contentViewWidthAnchor.constant = containerView.frame.width
         contentViewHeightAnchor.constant = containerView.frame.height
-        subDescTopAnchor.constant = GlobalConstants.safeAreaLayoutTop
-        subDescLeadingAnchor.constant = 20
-        descLeadingAnchor.constant = 20
+        
+        contentView.subDescriptionLabel.snp.remakeConstraints { (const) in
+            const.top.equalTo(contentView.snp.top).offset(GlobalConstants.safeAreaLayoutTop)
+            const.leading.equalTo(contentView.snp.leading).offset(20)
+            const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
+        }
+        contentView.descriptionLabel.snp.remakeConstraints { (const) in
+            const.top.equalTo(contentView.subDescriptionLabel.snp.bottom).offset(10)
+            const.leading.equalToSuperview().offset(20)
+            const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
+        }
         
         UIView.animate(withDuration: 0.6 * 0.6) {
             fallingTabbar.frame.origin.y = fromView.frame.maxY
+            contentView.layer.cornerRadius = 0
             containerView.layoutIfNeeded()
         }
     }
@@ -107,13 +125,8 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         contentViewTopAnchor = contentView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Originframe.minY)
         contentViewHeightAnchor = contentView.heightAnchor.constraint(equalToConstant: Originframe.height)
         contentViewWidthAnchor = contentView.widthAnchor.constraint(equalToConstant: Originframe.width)
-        
-        subDescTopAnchor = contentView.subDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15)
-        subDescLeadingAnchor = contentView.subDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
-        descTopAnchor =  contentView.descriptionLabel.topAnchor.constraint(equalTo: contentView.subDescriptionLabel.bottomAnchor, constant: 10)
-        descLeadingAnchor = contentView.descriptionLabel.leadingAnchor.constraint(equalTo:  contentView.leadingAnchor, constant:  15)
-        
-        return [contentViewCenterXAnchor, contentViewTopAnchor, contentViewHeightAnchor, contentViewWidthAnchor, subDescTopAnchor, subDescLeadingAnchor, descTopAnchor, descLeadingAnchor]
+
+        return [contentViewCenterXAnchor, contentViewTopAnchor, contentViewHeightAnchor, contentViewWidthAnchor]
         
     }
 }

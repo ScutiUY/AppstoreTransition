@@ -6,24 +6,54 @@
 //
 
 import UIKit
+import SnapKit
 
-class TabBarViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+class TabBarViewController: UITabBarController {
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var controllers: [UIViewController]?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
     }
-    */
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Tabbar",#function)
+        let vc1 = AppStoreMenuViewController()
+        let vcTabBarItem = UITabBarItem(title: "투데이", image: nil, tag: 0)
+        
+        let vc2 = SecondViewController()
+        let vc2TabBarItem = UITabBarItem(title: "설정", image: nil, tag: 1)
+        
+        vc2TabBarItem.isEnabled = false
+        
+        vc1.tabBarItem = vcTabBarItem
+        vc2.tabBarItem = vc2TabBarItem
+        
+        controllers = [vc1,vc2]
+        
+        self.viewControllers = controllers
+        self.setViewControllers(controllers, animated: true)
+        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+
+    override func viewWillLayoutSubviews() {
+        print("Tabbar", #function)
+        GlobalConstants.safeAreaLayoutTop = view.safeAreaInsets.top
+    }
+    func reloadItems() {
+        
+        
+        self.viewControllers = controllers
+        
+        self.setViewControllers(controllers, animated: true)
+    }
 }

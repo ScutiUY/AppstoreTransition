@@ -11,7 +11,7 @@ class SecondViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "내 정보"
         // Do any additional setup after loading the view.
     }
     

@@ -7,23 +7,16 @@
 
 import UIKit
 
-class StatusBarAnimationViewController: UIViewController {
+protocol StatusBarAnimationViewController: class {
+    var statusBarShouldBeHidden: Bool { get set }
+    var statusBarAnimationStyle: UIStatusBarAnimation { get set }
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+extension StatusBarAnimationViewController where Self: UIViewController {
+    func updateStatusBarAppearance(hidden: Bool, withDuration duration: Double = 0.5, completion: ((Bool) -> Void)? = nil) {
+        statusBarShouldBeHidden = hidden
+        UIView.animate(withDuration: duration, animations: { [weak self] in
+            self?.setNeedsStatusBarAppearanceUpdate()
+        }, completion: completion)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
