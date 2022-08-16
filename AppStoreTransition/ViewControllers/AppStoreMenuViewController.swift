@@ -40,18 +40,17 @@ class AppStoreMenuViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        print("appstoreVIew",#function)
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setLayout()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("appStoreView", #function)
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("appStoreView", #function)
     }
     
     func setLayout() {
