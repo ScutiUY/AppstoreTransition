@@ -94,10 +94,12 @@ class AppContentView: UIView {
         self.backgroundColor = .white
         scrollView.delegate = self
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setLayoutForCollectionViewCell()
     }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setLayoutForCollectionViewCell()
@@ -233,9 +235,9 @@ class AppContentView: UIView {
         
     }
     //MARK:- Fetch Data For CellView
-    func fetchDataForCell(image: UIImage?, subD: String, desc: String) {
+    func fetchDataForCell(image: UIImage?, subDescription: String, desc: String) {
         imageView.image = image
-        subDescriptionLabel.text = subD
+        subDescriptionLabel.text = subDescription
         descriptionLabel.text = desc
     }
     
