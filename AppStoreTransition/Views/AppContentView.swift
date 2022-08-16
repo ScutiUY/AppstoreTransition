@@ -133,9 +133,6 @@ class AppContentView: UIView {
     // MARK:- set Layout for PresentedView
     func setLayoutForContentVC(isTransition: Bool = false) {
         
-        
-        
-        
         self.addSubview(scrollView)
         
         scrollView.addSubview(imageView)
