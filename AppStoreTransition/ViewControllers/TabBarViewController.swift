@@ -18,12 +18,11 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("Tabbar",#function)
+        
         let vc1 = AppStoreMenuViewController()
         let vcTabBarItem = UITabBarItem(title: "투데이", image: nil, tag: 0)
         
@@ -41,16 +40,16 @@ class TabBarViewController: UITabBarController {
         self.setViewControllers(controllers, animated: true)
         
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
-
+    
     override func viewWillLayoutSubviews() {
-        print("Tabbar", #function)
         GlobalConstants.safeAreaLayoutTop = view.safeAreaInsets.top
     }
+    
     func reloadItems() {
-        
         
         self.viewControllers = controllers
         
