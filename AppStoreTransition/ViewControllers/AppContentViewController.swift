@@ -18,18 +18,19 @@ class AppContentViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
+    
     override var prefersStatusBarHidden: Bool {
         return statusBarShouldBeHidden
     }
+    
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
     
-    var contentView = AppContentView(isContentView: true)
+    private var contentView = AppContentView(isContentView: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ContentView", #function)
         setLayout()
         addNoti()
         
@@ -40,17 +41,15 @@ class AppContentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ContentView", #function)
         updateStatusBar(hidden: true, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: .closeButton, object: nil)
-        print("ContentView", #function)
     }
     
-    func setLayout() {
+    private func setLayout() {
         contentView.contentMode = .center
         view.addSubview(contentView)
         contentView.snp.makeConstraints { (const) in
@@ -72,6 +71,7 @@ class AppContentViewController: UIViewController {
     @objc func closeVC() {
         self.dismiss(animated: true, completion: nil)
     }
+    
     func updateStatusBar(hidden: Bool, completion: ((Bool) -> Void)?) {
         statusBarShouldBeHidden = hidden
         UIView.animate(withDuration: 0.5) {
@@ -135,7 +135,7 @@ extension AppContentViewController: UIGestureRecognizerDelegate {
 
                 if isDismissalSuccess {
                     dismissalAnimator!.stopAnimation(false)
-                    dismissalAnimator!.addCompletion { [unowned self] (pos) in
+                    dismissalAnimator!.addCompletion { (pos) in
                         switch pos {
                         case .end:
                             NotificationCenter.default.post(name: .closeButton, object: nil)
