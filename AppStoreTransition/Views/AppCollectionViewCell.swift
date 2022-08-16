@@ -18,7 +18,6 @@ class AppCollectionViewCell: UICollectionViewCell {
 
     func freezeAnimations() {
         disabledHighlightedAnimation = true
-        print("cell freezed")
         layer.removeAllAnimations()
     }
 
@@ -63,7 +62,9 @@ class AppCollectionViewCell: UICollectionViewCell {
     }
     
     func fectchData(model: AppContentModel) {
-        appContentView.fetchDataForCell(image: model.image, subD: model.subDescription!, desc: model.description!)
+        guard let subDescription = model.subDescription else { return }
+        guard let desc = model.description else { return }
+        appContentView.fetchDataForCell(image: model.image, subDescription: subDescription, desc: desc)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
