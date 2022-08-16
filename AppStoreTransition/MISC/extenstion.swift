@@ -5,12 +5,12 @@
 //  Created by UY on 2020/12/16.
 //
 
-import Foundation
 import UIKit
 
 extension Notification.Name {
     static let closeButton = Notification.Name("closeButton")
 }
+
 extension UIView {
     func addShadowAndRoundCorner(cornerRadius : CGFloat) {
         self.layer.shadowOffset = .zero
