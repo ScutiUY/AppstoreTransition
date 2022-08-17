@@ -24,11 +24,8 @@ class GestureDismissalTransitionController: UIPercentDrivenInteractiveTransition
         targetViewController?.view.addGestureRecognizer(gesture)
     }
     
-    
     @objc func handleDismissPanGeusture(_ pan: UIPanGestureRecognizer) {
         
-        
-            
             let startingPoint: CGPoint
             let targetAnimatedView = pan.view!
             if let p = interactiveStartingPoint {
@@ -39,7 +36,6 @@ class GestureDismissalTransitionController: UIPercentDrivenInteractiveTransition
                 interactiveStartingPoint = startingPoint
             }
             let currentLocation = pan.location(in: nil)
-            
             
             let targetShrinkScale: CGFloat = 0.86
             let targetCornerRadius: CGFloat = GlobalConstants.cornerRadius
@@ -60,7 +56,6 @@ class GestureDismissalTransitionController: UIPercentDrivenInteractiveTransition
                 }
             }
             
-            
             switch pan.state {
             case .began:
                 dismissalAnimator = createInteractiveDismissalAnimatorIfNeeded()
@@ -76,7 +71,7 @@ class GestureDismissalTransitionController: UIPercentDrivenInteractiveTransition
 
                 if isDismissalSuccess {
                     dismissalAnimator!.stopAnimation(false)
-                    dismissalAnimator!.addCompletion { [unowned self] (pos) in
+                    dismissalAnimator!.addCompletion { (pos) in
                         switch pos {
                         case .end:
                             NotificationCenter.default.post(name: .closeButton, object: nil)
@@ -94,6 +89,4 @@ class GestureDismissalTransitionController: UIPercentDrivenInteractiveTransition
                 return
             }
         }
-    
-    
 }

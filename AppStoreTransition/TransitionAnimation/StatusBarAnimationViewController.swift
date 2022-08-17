@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol StatusBarAnimationViewController: class {
+protocol StatusBarAnimationViewController: AnyObject {
     var statusBarShouldBeHidden: Bool { get set }
     var statusBarAnimationStyle: UIStatusBarAnimation { get set }
 }

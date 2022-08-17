@@ -81,7 +81,6 @@ extension AppStoreMenuViewController: UICollectionViewDelegate,UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cell = collectionView.cellForItem(at: indexPath) as! AppCollectionViewCell
-        print(cell.frame)
         let appContentVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Appcontent") as! AppContentViewController
         appStoreTransition.indexPath = indexPath
         appStoreTransition.superViewcontroller = appContentVC
