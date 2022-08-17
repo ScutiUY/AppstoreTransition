@@ -88,7 +88,13 @@ class AppContentPresentTransitioningAnimator: NSObject, UIViewControllerAnimated
         
         contentViewTopAnchor.constant = 0
         
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveLinear, animations: {
+        UIView.animate(
+            withDuration: 0.6,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.7,
+            options: .curveLinear,
+            animations: {
             contentView.layoutIfNeeded()
         }) { (comp) in
             toView.alpha = 1.0
