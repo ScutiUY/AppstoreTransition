@@ -5,7 +5,6 @@
 //  Created by UY on 2020/12/13.
 //
 
-import Foundation
 import UIKit
 
 class AppContentTransitionController: NSObject, UIViewControllerTransitioningDelegate {
