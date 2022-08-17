@@ -23,7 +23,7 @@ class AppcontentPresentaion: UIPresentationController {
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
-    
+   
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
         guard let containerView = containerView else  { fatalError() }
@@ -49,6 +49,7 @@ class AppcontentPresentaion: UIPresentationController {
         })
         
     }
+    
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
         guard let coordinator = presentingViewController.transitionCoordinator else {
