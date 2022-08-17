@@ -21,13 +21,11 @@ class AppContentDissmissTransitioningAnimator : NSObject, UIViewControllerAnimat
     var descTopAnchor: NSLayoutConstraint!
     var descLeadingAnchor: NSLayoutConstraint!
     
-    
     init(indexPath: IndexPath, cellFrame targetCellFrame: CGRect) {
         targetIndexPath = indexPath
         targetData = model[indexPath.row]
         self.targetCellFrame = targetCellFrame
     }
-    
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.6
@@ -82,7 +80,6 @@ class AppContentDissmissTransitioningAnimator : NSObject, UIViewControllerAnimat
         shadowView.addSubview(contentView)
         containerView.addSubview(floatingTabbar)
         
-        
         contentView.snp.makeConstraints { (const) in
             const.top.equalTo(shadowView.snp.top)
             const.bottom.equalTo(shadowView.snp.bottom)
@@ -91,26 +88,6 @@ class AppContentDissmissTransitioningAnimator : NSObject, UIViewControllerAnimat
         }
         
         containerView.layoutIfNeeded()
-        
-        func reConfigureContentLabel() {
-            
-            contentView.subDescriptionLabel.snp.remakeConstraints { (const) in
-                const.top.equalTo(contentView.snp.top).offset(15)
-                const.leading.equalTo(contentView.snp.leading).offset(15)
-                const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
-            }
-            contentView.descriptionLabel.snp.remakeConstraints { (const) in
-                const.top.equalTo(contentView.subDescriptionLabel.snp.bottom).offset(10)
-                const.leading.equalToSuperview().offset(15)
-                const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
-            }
-            contentView.imageView.snp.remakeConstraints { (const) in
-                const.top.equalTo(contentView.snp.top)
-                const.leading.equalTo(contentView.snp.leading)
-                const.trailing.equalTo(contentView.snp.trailing)
-                const.bottom.equalTo(contentView.snp.bottom)
-            }
-        }
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: .curveLinear) {
             
@@ -140,8 +117,25 @@ class AppContentDissmissTransitioningAnimator : NSObject, UIViewControllerAnimat
             contentView.removeFromSuperview()
             transitionContext.completeTransition(success)
         }
-
+        
+        func reConfigureContentLabel() {
+            
+            contentView.subDescriptionLabel.snp.remakeConstraints { (const) in
+                const.top.equalTo(contentView.snp.top).offset(15)
+                const.leading.equalTo(contentView.snp.leading).offset(15)
+                const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
+            }
+            contentView.descriptionLabel.snp.remakeConstraints { (const) in
+                const.top.equalTo(contentView.subDescriptionLabel.snp.bottom).offset(10)
+                const.leading.equalToSuperview().offset(15)
+                const.width.equalTo(contentView.snp.width).multipliedBy(0.8)
+            }
+            contentView.imageView.snp.remakeConstraints { (const) in
+                const.top.equalTo(contentView.snp.top)
+                const.leading.equalTo(contentView.snp.leading)
+                const.trailing.equalTo(contentView.snp.trailing)
+                const.bottom.equalTo(contentView.snp.bottom)
+            }
+        }
     }
-    
-    
 }
