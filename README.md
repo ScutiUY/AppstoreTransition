@@ -5,7 +5,8 @@
 
 # Overview
 
-본 프로젝트는 Appstore의 미려한 화면 전환과 View(Cell)와의 상호작용 구현 기술을 카피한 것으로 외부 라이브러리는 layout 구성시 Snapkit 외에 transition 과정에선 외부 라이브러리의 추가 없이 구성 되었습니다.
+본 프로젝트는 기본 어플리케이션 Appstore의 미려한 화면 전환과 과정에서의 상호작용을 카피하여 구현하였습니다.       
+외부 라이브러리는 layout 구성시 Snapkit 외에 transition 과정에선 외부 라이브러리의 추가 없이 구성 되었습니다.     
 UIViewControllerTransitioningDelegate를 통한 view의 transition과 statusBar, Tabbar 등의 자연스러운 사용자 인터렉션을 구현하였습니다.
 
 <br>
