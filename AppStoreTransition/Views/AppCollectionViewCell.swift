@@ -89,25 +89,28 @@ class AppCollectionViewCell: UICollectionViewCell {
         }
         
         if isTouched {
-            AppCollectionViewCell.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 1,
-                           options: [.allowUserInteraction], animations: {
-                            self.transform = .init(scaleX: 0.96, y: 0.96)
-                            self.layoutIfNeeded()
-                           }, completion: nil)
+            AppCollectionViewCell.animate(
+                withDuration: 0.5,
+                delay: 0,
+                usingSpringWithDamping: 1,
+                initialSpringVelocity: 1,
+                options: [.allowUserInteraction], animations: {
+                    self.transform = .init(scaleX: 0.96, y: 0.96)
+                    self.layoutIfNeeded()
+                }, completion: nil)
         } else {
-            AppCollectionViewCell.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 0,
-                           options: .allowUserInteraction, animations: {
-                            self.transform = .identity
-                           }, completion: nil)
+            AppCollectionViewCell.animate(
+                withDuration: 0.5,
+                delay: 0,
+                usingSpringWithDamping: 1,
+                initialSpringVelocity: 0,
+                options: .allowUserInteraction,
+                animations: {
+                    self.transform = .identity
+                }, completion: nil)
         }
     }
- 
+    
 }
 
 

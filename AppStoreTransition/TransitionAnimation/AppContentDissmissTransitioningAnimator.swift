@@ -89,8 +89,13 @@ class AppContentDissmissTransitioningAnimator : NSObject, UIViewControllerAnimat
         
         containerView.layoutIfNeeded()
         
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: .curveLinear) {
-            
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0,
+            options: .curveLinear) {
+                
             reConfigureContentLabel()
             contentView.frame = finalFrame
             shadowView.frame = finalFrame
